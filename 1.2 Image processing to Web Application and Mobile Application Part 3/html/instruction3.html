@@ -1,0 +1,89 @@
+<!-- Author: Janwin Toralba -->
+<!-- execute this code in XAMPP -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image processing to Web Application and Mobile Application Part 1</title>
+
+    <!-- Link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" 
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+            crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Style -->
+    <style>
+        .margin {
+            height: 5rem;
+            background-color: rgb(49, 49, 49);
+        }
+
+        .card-img-top { height: 500px; }
+    </style>
+</head>
+<body>
+
+    <div class="margin mb-5"></div>
+    
+    <div class="container">
+        <h1>Instruction #3</h1>
+        <p class="insert mb-5">Create a responsive file using a <strong>bootstrap that organizes 10 images</strong> and follows the principles of graphics and layout.</p>
+    </div>
+
+    <div class="margin mt-5"></div>
+
+    <!-- Script -->
+    <script>
+        $(document).ready(() => {
+            const ROW_SIZE = 2;
+            const container = $('.container');
+
+            const imgContainer = new ImageContainer($('.insert'));
+            let col = '', row = '';
+
+            for(let i = 0; i < 10; i++) {
+                let remainingRow = 10 - i;
+                col += imgContainer.insertCol(i);
+
+                if(((i + 1) % ROW_SIZE == 0)) {
+                    row = imgContainer.insertRow(col);
+                    imgContainer.insert(row);
+                    col = '', row = '';
+                }
+            }
+
+            console.log(row);
+        });
+
+        class ImageContainer {
+
+            row = '<div class="row"><insert></div>';
+            
+            col = ` <div class="card col p-0" style="width: 18rem;">
+                        <img class="card-img-top m-0" src="../img/card-img-<insert-index>.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">Card Number <insert-index></h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </div>`;
+            
+            constructor(target) { this.target = target; }
+
+            insert(row) {
+                this.target.after(row);
+                return this;
+            }
+
+            insertRow(col) { return this.row.replace('<insert>', col); }
+
+            insertCol(index) { return this.col.replaceAll('<insert-index>', index + 1); }
+
+        }
+    </script>
+</body>
+</html>
